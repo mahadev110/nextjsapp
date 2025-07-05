@@ -10,11 +10,12 @@ async function main() {
   console.log("👤 Creating admin...");
   await prisma.user.create({
     data: {
- mobile: "9999999999",
-    password: "admin",
-    role: "ADMIN",
-    standard: "N/A", // or "admin"
-    section: "N/A",  // or "admin"
+      mobile: "9999999999",
+      username: "admin",
+      password: "admin",
+      role: "ADMIN",
+      standard: "N/A",
+      section: "N/A",
     },
   });
 
@@ -23,6 +24,7 @@ async function main() {
     data: [
       {
         mobile: "9000000001",
+        username: "student1",
         password: "1234",
         standard: "8",
         section: "A",
@@ -30,6 +32,7 @@ async function main() {
       },
       {
         mobile: "9000000002",
+        username: "student2",
         password: "1234",
         standard: "8",
         section: "B",
@@ -37,15 +40,22 @@ async function main() {
       },
       {
         mobile: "9000000003",
+        username: "student3",
         password: "1234",
         standard: "9",
         section: "A",
         role: "STUDENT",
       },
     ],
+  
   });
 
   console.log("✅ Seeding complete!");
 }
 
-main().finally(() => prisma.$disconnect());
+main()
+  .catch((e) => {
+    console.error("❌ Seed failed:", e);
+    process.exit(1);
+  })
+  .finally(() => prisma.$disconnect());
