@@ -24,3 +24,13 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* global.css or layout.css */
+[data-nextjs-dev-tools-button] {
+  display: none !important;
+}
+
+/* styles/globals.css or layout.tsx/app.css */
+svg[data-next-mark-loading] {
+  display: none !important;
+}
