@@ -9,28 +9,42 @@ export default function LoginPage() {
   const [error, setError] = useState("");
   const router = useRouter();
 
-  const handleLogin = async () => {
-    const res = await fetch("/api/auth/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ mobile, password }),
-    });
+const handleLogin = async () => {
+  const res = await fetch("/api/auth/login", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ mobile, password }),
+  });
 
-    const data = await res.json();
+  let data;
+  try {
+    data = await res.json();
+  } catch {
+    console.error("Invalid JSON in response");
+    return;
+  }
 
-    if (!res.ok) {
-      setError(data.message || "Login failed");
-      return;
-    }
+  if (!res.ok) {
+    console.error("Login failed:", data?.message);
+    return;
+  }
 
-    localStorage.setItem("token", data.token);
+  console.log("Login success:", data);
 
-    if (data.role === "ADMIN") {
-      router.push("/admin");
-    } else {
-      router.push("/student");
-    }
-  };
+  // Optional: Save token to localStorage
+  localStorage.setItem("token", data.token);
+
+  // Redirect based on role
+  if (data.role === "ADMIN") {
+    router.push("/admin");
+  } else if (data.role === "STUDENT") {
+    router.push("/student");
+  } else {
+    console.error("Unknown role:", data.role);
+  }
+};
+
+
 
   return (
     <div className="max-w-md mx-auto mt-20 bg-white p-6 rounded shadow">

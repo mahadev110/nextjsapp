@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import LogoutButton from "../components/LogoutButton";
 
 export default function AdminPage() {
   const [standard, setStandard] = useState("8");
@@ -31,6 +32,7 @@ export default function AdminPage() {
 
   return (
     <div className="max-w-lg mx-auto mt-12 bg-white p-6 rounded shadow">
+      <LogoutButton />
       <h1 className="text-2xl font-bold mb-4">📢 Send Message</h1>
 
       {status && <p className="mb-4 text-sm text-blue-600">{status}</p>}

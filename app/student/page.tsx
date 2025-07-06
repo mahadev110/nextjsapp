@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import LogoutButton from "../components/LogoutButton";
 
 interface Message {
   id: string;
@@ -43,6 +44,7 @@ export default function StudentPage() {
 
   return (
     <div className="max-w-2xl mx-auto mt-12 p-4">
+      <LogoutButton />
       <h1 className="text-2xl font-bold mb-6">📬 Your Messages</h1>
 
       {error && <p className="text-red-600">{error}</p>}
