@@ -22,16 +22,19 @@ export async function POST(req: Request) {
       return NextResponse.json({ message: "Invalid mobile or password" }, { status: 401 });
     }
 
-    const token = jwt.sign(
-      {
-        userId: user.id,
-        role: user.role,
-        standard: user.standard,
-        section: user.section,
-      },
-      JWT_SECRET,
-      { expiresIn: "1d" }
-    );
+const token = jwt.sign(
+  {
+    userId: user.id,
+    role: user.role,
+    standard: user.standard,
+    section: user.section,
+    username: user.username,       // 👈 add this
+    mobile: user.mobile            // 👈 and/or this
+  },
+  JWT_SECRET,
+  { expiresIn: "1d" }
+);
+
 
     return NextResponse.json({ token, role: user.role });
   } catch (error: any) {
