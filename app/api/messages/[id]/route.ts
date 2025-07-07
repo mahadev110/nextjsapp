@@ -5,7 +5,10 @@ import jwt from "jsonwebtoken";
 const prisma = new PrismaClient();
 const JWT_SECRET = process.env.JWT_SECRET || "mysecret";
 
-export async function DELETE(req: Request, { params }: { params: { id: string } }) {
+export async function DELETE(
+  req: Request,
+  { params }: { params: { id: string } }
+) {
   const authHeader = req.headers.get("authorization");
   if (!authHeader || !authHeader.startsWith("Bearer ")) {
     return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
@@ -29,12 +32,20 @@ export async function DELETE(req: Request, { params }: { params: { id: string } 
     return NextResponse.json({ message: "Message deleted" });
   } catch (error: any) {
     console.error("Delete error:", error);
-    return NextResponse.json({ message: "Error deleting message" }, { status: 500 });
+    return NextResponse.json(
+      { message: "Error deleting message" },
+      { status: 500 }
+    );
   }
 }
 
 // ✅ PUT handler for editing
-export async function PUT(req: Request, { params }: { params: { id: string } }) {
+export async function PUT(
+  req: Request,
+  context: { params: Record<string, string> }
+) {
+  const { params } = context;
+  const id = params.id;
   const authHeader = req.headers.get("authorization");
   if (!authHeader || !authHeader.startsWith("Bearer ")) {
     return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
@@ -68,6 +79,9 @@ export async function PUT(req: Request, { params }: { params: { id: string } }) 
     return NextResponse.json({ message: "Message updated", updatedMessage });
   } catch (error: any) {
     console.error("Update error:", error);
-    return NextResponse.json({ message: "Error updating message" }, { status: 500 });
+    return NextResponse.json(
+      { message: "Error updating message" },
+      { status: 500 }
+    );
   }
 }
