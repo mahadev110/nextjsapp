@@ -5,10 +5,9 @@ import jwt from "jsonwebtoken";
 const prisma = new PrismaClient();
 const JWT_SECRET = process.env.JWT_SECRET || "mysecret";
 
-export async function DELETE(
-  req: Request,
-  { params }: { params: { id: string } }
-) {
+// DELETE handler
+export async function DELETE(req: Request, context: any) {
+  const { params } = context;
   const authHeader = req.headers.get("authorization");
   if (!authHeader || !authHeader.startsWith("Bearer ")) {
     return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
@@ -39,13 +38,9 @@ export async function DELETE(
   }
 }
 
-// ✅ PUT handler for editing
-export async function PUT(
-  req: Request,
-  context: { params: Record<string, string> }
-) {
+// PUT handler
+export async function PUT(req: Request, context: any) {
   const { params } = context;
-  const id = params.id;
   const authHeader = req.headers.get("authorization");
   if (!authHeader || !authHeader.startsWith("Bearer ")) {
     return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
