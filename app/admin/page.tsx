@@ -3,12 +3,23 @@
 import { useState, useEffect } from "react";
 import LogoutButton from "../components/LogoutButton";
 
+interface Message {
+  id: string;
+  content: string;
+  standard: string;
+  section: string;
+  createdAt: string;
+}
+
+
 export default function AdminPage() {
   const [standard, setStandard] = useState("8");
   const [section, setSection] = useState("A");
   const [message, setMessage] = useState("");
   const [status, setStatus] = useState("");
-   const [messages, setMessages] = useState([]); 
+const [messages, setMessages] = useState<Message[]>([]);
+
+   
 const fetchMessages = async () => {
   try {
     const res = await fetch("/api/messages");
