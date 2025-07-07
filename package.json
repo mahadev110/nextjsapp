@@ -13,6 +13,7 @@
     "seed": "node prisma/seed.js"
   },
   "dependencies": {
+    "@heroicons/react": "^2.2.0",
     "@prisma/client": "^6.10.1",
     "jsonwebtoken": "^9.0.2",
     "jwt-decode": "^4.0.0",
